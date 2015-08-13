@@ -1,0 +1,23 @@
+.header-fixed > tbody {
+    height: 600px;
+}
+
+.doughnut-legend li .label-color {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.doughnut-legend li .label-name {
+  width: 100px;
+  display: inline-block;
+}
+
+.doughnut-legend {
+  list-style: none;
+}
+
+.chart-legend{
+  padding-top: 50px;
+}

@@ -1,0 +1,16 @@
+.nav-sidebar .dashboard-opt a,
+.nav-sidebar .dashboard-opt a:hover,
+.nav-sidebar .dashboard-opt a:focus {
+  	background-color: #222222;
+}
+
+.nav-sidebar .dashboard-opt a:hover{
+	background-color: #A1A1A1;
+}
+
+.nav-sidebar .history-opt a,
+.nav-sidebar .history-opt a:hover,
+.nav-sidebar .history-opt a:focus {
+	color: #fff;
+	background-color: #A1A1A1;
+}
