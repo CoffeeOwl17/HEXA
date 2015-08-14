@@ -111,11 +111,19 @@ class PostController extends Controller
     					break;
     				}
     				else{
-    					$arrayPost[] = array(
-    						'message'		=> $posts[$i]->message,
-    						'created_time' 	=> $posts[$i]->created_time,
-    						'id'			=> $posts[$i]->id
-    					);
+              $post_msg = "";
+              if(isset($posts[$i]->message)){
+      					$post_msg = $posts[$i]->message;
+              }
+              else{
+                $post_msg = $posts[$i]->story;
+              }
+              
+              $arrayPost[] = array(
+                'message'   => $post_msg,
+                'created_time'  => $posts[$i]->created_time,
+                'id'      => $posts[$i]->id
+              );
     				}
     				$count ++;
     			}
@@ -126,7 +134,8 @@ class PostController extends Controller
     		echo json_encode($arrayPost);
     	}
     	catch (Exception $e){
-    		echo "Error: Page not found, make sure the page id entered is valid.";
+    		// echo "Error: Page not found, make sure the page id entered is valid.";
+        echo $e;
     	}
     }
   }
