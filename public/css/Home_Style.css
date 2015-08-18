@@ -1,0 +1,35 @@
+.huge {
+    font-size: 40px;
+}
+
+.panel-post {
+    border-color: #3399FF;
+}
+
+.panel-post > .panel-heading {
+	border-color: #3399FF;
+    color: #fff;
+    background-color: #3399FF;
+}
+
+.panel-comment {
+    border-color: #9933FF;
+}
+
+.panel-comment > .panel-heading {
+	border-color: #9933FF;
+    color: #fff;
+    background-color: #9933FF
+}
+
+.line-legend li span {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.line-legend {
+  list-style: none;
+}
+

@@ -1,4 +1,4 @@
-<script>
+	<script>
 	$(function(){
 
 		drawGraph({!! $num_sentiment['num_neutral'] !!},
@@ -79,16 +79,16 @@
 			    }
 			]
 
-      var option = {
-        legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span class=\"label-color\" style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><span class=\"label-name\"><%=segments[i].label%></span><%=segments[i].value%><%}%></li><%}%></ul>"
-      };
+	    	var option = {
+	    		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span class=\"label-color\" style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><span class=\"label-name\"><%=segments[i].label%></span><%=segments[i].value%><%}%></li><%}%></ul>"
+	    	};
 
 			$( "div" ).remove( "#loading" );
 			$( ".statistical-result" ).html( "<div class='row'><div class='col-md-6' align='right'><canvas id='myChart' width='300' height='300'></canvas></div><div class='col-md-6 chart-legend' align='left'></div></div>" );
 
 			var ctx = $("#myChart").get(0).getContext("2d");
 			var myDoughnutChart = new Chart(ctx).Doughnut(data, option);
-      $( ".chart-legend" ).html(myDoughnutChart.generateLegend());
+	  		$( ".chart-legend" ).html(myDoughnutChart.generateLegend());
 		}
 	});
 
