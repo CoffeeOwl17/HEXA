@@ -306,7 +306,12 @@ class PostController extends Controller
       $graphObject = $response->getGraphObject();
       $result = $graphObject->asArray();
 
-      $comments = $result['data'];
+      if(isset($result['data'])){
+        $comments = $result['data'];
+      }
+      else if(isset($result['comment_data'])){
+        $comments = $result['comment_data'];
+      }
 
       for($i=0; $i<sizeof($comments); ++$i){
 

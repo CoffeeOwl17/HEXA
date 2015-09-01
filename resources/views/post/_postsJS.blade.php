@@ -95,5 +95,8 @@ $(function(){
   $( document ).ajaxStart(function() {
       $( "#page-result" ).html( "<i class='fa fa-cog fa-5x fa-spin'></i> Retrieving post from page..." );
   });
+  
 });
+
+
 </script>
