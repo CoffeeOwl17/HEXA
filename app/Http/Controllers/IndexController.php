@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+session_start();
+
 class IndexController extends Controller
 {
     public function index(){
-      return view('index');
+    	if(isset($_SESSION['token'])){
+    		return redirect('/home');
+    	}
+    	return view('index');
     }
 }

@@ -18,4 +18,7 @@ Route::get('/logout', 'LogoutController@index');
 Route::get('/post', 'PostController@index');
 Route::post('/post/search', 'PostController@searchPage');
 Route::get('/post/{page}/{post}', 'PostController@comment');
+Route::get('/update/{page}', 'PostController@updateComment');
 Route::get('/history', 'HistoryController@index');
+Route::get('/profile', 'ProfileController@index');
+Route::get('/about', 'AboutController@index');

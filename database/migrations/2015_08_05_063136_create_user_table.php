@@ -17,6 +17,7 @@ class CreateUserTable extends Migration
             $table->string('user_name');
             $table->string('user_email');
             $table->string('user_profilePic');  
+            $table->string('user_profilePic2');  
 
             $table->primary('user_id');
         });

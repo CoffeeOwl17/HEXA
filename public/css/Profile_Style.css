@@ -8,13 +8,10 @@
 	background-color: #A1A1A1;
 }
 
-.nav-sidebar .post-opt a,
-.nav-sidebar .post-opt a:hover,
-.nav-sidebar .post-opt a:focus {
+.nav-sidebar .profile-opt a,
+.nav-sidebar .profile-opt a:hover,
+.nav-sidebar .profile-opt a:focus {
 	color: #fff;
 	background-color: #A1A1A1;
 }
 
-#page-result  i{
-	vertical-align: middle;
-}

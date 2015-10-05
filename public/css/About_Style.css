@@ -8,13 +8,9 @@
 	background-color: #A1A1A1;
 }
 
-.nav-sidebar .post-opt a,
-.nav-sidebar .post-opt a:hover,
-.nav-sidebar .post-opt a:focus {
+.nav-sidebar .about-opt a,
+.nav-sidebar .about-opt a:hover,
+.nav-sidebar .about-opt a:focus {
 	color: #fff;
 	background-color: #A1A1A1;
-}
-
-#page-result  i{
-	vertical-align: middle;
 }

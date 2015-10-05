@@ -9,7 +9,13 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-          <a href="../home/home.php" class="navbar-brand">HEXA</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/home" class="navbar-brand">HEXA</a>
           <p class="navbar-text">Human Emotional Expression Analyzer</p>
 
           </div>
@@ -24,7 +30,7 @@
   </nav>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-3 sidebar">
+      <div class="col-md-3 sidebar collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <div class="profile container-fluid">
           <div class="pic">
             <a href="#"><img class="img-circle" src="{!! $user_profilePic !!}"></a>
@@ -36,13 +42,13 @@
         </div>
         <ul class="nav nav-sidebar">
           <li class="dashboard-opt"><a href="/home"><i class="fa fa-home fa-fw"></i> Dashboard</a></li>
-          <li class="profile-opt"><a href="/profle"><i class="fa fa-user fa-fw"></i> Profile</a></li>
+          <li class="profile-opt"><a href="/profile"><i class="fa fa-user fa-fw"></i> Profile</a></li>
           <li class="post-opt"><a href="/post"><i class="fa fa-flask fa-fw"></i> Analyze Post</a></li>
           <li class="history-opt"><a href="/history"><i class="fa fa-history fa-fw"></i> History</a></li>
           <li class="about-opt"><a href="/about"><i class="fa fa-question-circle fa-fw"></i> What is HEXA</a></li>
         </ul>
       </div>
-      <div class="col-md-9 main-content">
+      <div class="col-md-9 col-md-offset-3 main-content">
       	@yield('app_content')
       </div>
     </div>

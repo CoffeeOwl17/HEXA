@@ -1,7 +1,38 @@
 	<script>
 	$(function(){
+		var commentDate		= [];
+		var sentiments		= [];
+		var comment_sent	= [];
+		var comment_data 	= <?php echo json_encode($comments) ?>;
+		var sentimnt_data 	= <?php echo json_encode($sentiment) ?>;
 
-		drawGraph({!! $num_sentiment['num_neutral'] !!},
+		$.each(comment_data, function(index, value){
+			commentDate.push(value['comment_datetime']);
+		});
+
+		$.each(sentimnt_data, function(index, value){
+			sentiments.push(value['result']);
+		});
+
+		for(i=0; i<commentDate.length; ++i){
+			comment_sent.push({date:commentDate[i], sentiment:sentiments[i]});
+		}
+
+		var table = $('#comment_table').DataTable({
+			"scrollY"		: "500px",
+			"scrollX"		: true,
+	        "scrollCollapse": true,
+	        "paging"		: false,
+	        "aoColumns": [
+	        	{"bSearchable": false}, 
+	        	{"bSearchable": false}, 
+	        	{"bSearchable": false},
+	        	{"bSearchable": false},
+	        	{"bSearchable": true}
+	        ]
+		});
+
+		drawDoughnutGraph({!! $num_sentiment['num_neutral'] !!},
               {!! $num_sentiment['num_joy'] !!},
               {!! $num_sentiment['num_sadness'] !!},
               {!! $num_sentiment['num_trust'] !!},
@@ -11,7 +42,7 @@
               {!! $num_sentiment['num_surprise'] !!},
               {!! $num_sentiment['num_anticipation'] !!});
 
-		function drawGraph(n, j, s, t, d, f, a, su, an){
+		function drawDoughnutGraph(n, j, s, t, d, f, a, su, an){
 			var neutral 		= n;
 			var joy 			= j;
 			var sadness 		= s;

@@ -17,6 +17,7 @@ class CreateCommentTable extends Migration
             $table->text('comment');
             $table->string('commenter');
             $table->string('commenter_id');
+            $table->string('comment_datetime');
             $table->string('post_id')->nullable();
 
             $table->foreign('post_id')

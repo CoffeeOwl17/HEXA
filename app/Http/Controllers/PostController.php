@@ -98,7 +98,11 @@ class PostController extends Controller
     			$response = $request->execute();
     			$graphObject = $response->getGraphObject();
     			$result = $graphObject->asArray();
-
+          // print_r($result);
+          if(! isset($result['data'])){
+            json_encode('Not Found');
+            break;
+          }
     			$posts = $result['data'];
 
     			for($i=0; $i<sizeof($posts); ++$i){
@@ -165,7 +169,12 @@ class PostController extends Controller
       $post_model = new App\post;
 
   		$graphObject = $this->getPost($post_id);
-  		$postMsg 	= $graphObject->getProperty('message');
+      if(null!==$graphObject->getProperty('message')){
+  		  $postMsg 	= $graphObject->getProperty('message');
+      }
+      else{
+        $postMsg  = $graphObject->getProperty('story');
+      }
   		$postTime 	= $graphObject->getProperty('created_time');
 
       $post_model->post_id        = $post_id;
@@ -180,10 +189,11 @@ class PostController extends Controller
       $post_model = App\post::where('post_id', $post_id)->first();
       $count = 0;
       foreach($comment_data as $comment){
-        $comment_model = new App\comment;
-        $comment_model->comment = $comment['comment'];
-        $comment_model->commenter = $comment['commenter'];
-        $comment_model->commenter_id = $comment['commenter_id'];
+        $comment_model                      = new App\comment;
+        $comment_model->comment             = $comment['comment'];
+        $comment_model->commenter           = $comment['commenter'];
+        $comment_model->commenter_id        = $comment['commenter_id'];
+        $comment_model->comment_datetime    = $comment['comment_datetime'];
         $post_model->comments()->save($comment_model);
 
         $sentiment_model                = new App\commentSentiment;
@@ -220,10 +230,11 @@ class PostController extends Controller
         $sentiment_data = $this->sentiment($comment_data);
         $count = 0;
         foreach($comment_data as $comment){
-          $comment_model = new App\comment;
-          $comment_model->comment = $comment['comment'];
-          $comment_model->commenter = $comment['commenter'];
-          $comment_model->commenter_id = $comment['commenter_id'];
+          $comment_model                      = new App\comment;
+          $comment_model->comment             = $comment['comment'];
+          $comment_model->commenter           = $comment['commenter'];
+          $comment_model->commenter_id        = $comment['commenter_id'];
+          $comment_model->comment_datetime = $comment['comment_datetime'];
           $post_model->comments()->save($comment_model);
 
           $sentiment_model                = new App\commentSentiment;
@@ -265,7 +276,7 @@ class PostController extends Controller
     $data['post']           = $post_data;
     $data['comments']       = $comment_data;
     $data['sentiment']      = $sentiment_data;
-    $num_sent_data = $this->count_sentiment($sentiment_data);
+    $num_sent_data          = $this->count_sentiment($sentiment_data);
     $data['num_sentiment']  = $num_sent_data;
     return view('post.comments', $data);
   }
@@ -341,9 +352,10 @@ class PostController extends Controller
 
           if($comment_obj != "" && trim($comment_obj, ' ') != ''){
             $comment_data[] = array(
-              "comment"       => $comment_obj,
-              "commenter"     => $comments[$i]->from->name,
-              "commenter_id"  => $comments[$i]->from->id
+              "comment"           => $comment_obj,
+              "commenter"         => $comments[$i]->from->name,
+              "commenter_id"      => $comments[$i]->from->id,
+              "comment_datetime"  => $comments[$i]->created_time
             );
           }
         }
@@ -433,5 +445,39 @@ class PostController extends Controller
       'num_anticipation'    =>  $anticipation
     );
     return $count_sentiment;
+  }
+
+  public function updateComment($post_id){
+    $post_model = App\post::where('post_id', $post_id)->first();
+    $page_id = $post_model->page_id;
+    
+    $post_model->comments()->delete();
+    
+    $comment_data = $this->getComment($post_id);
+    $sentiment_data = $this->sentiment($comment_data);
+    $count = 0;
+    foreach($comment_data as $comment){
+      $comment_model                      = new App\comment;
+      $comment_model->comment             = $comment['comment'];
+      $comment_model->commenter           = $comment['commenter'];
+      $comment_model->commenter_id        = $comment['commenter_id'];
+      $comment_model->comment_datetime = $comment['comment_datetime'];
+      $post_model->comments()->save($comment_model);
+
+      $sentiment_model                = new App\commentSentiment;
+      $sentiment_model->joy           = $sentiment_data[$count]['joy'];
+      $sentiment_model->sadness       = $sentiment_data[$count]['sadness'];
+      $sentiment_model->trust         = $sentiment_data[$count]['trust'];
+      $sentiment_model->disgust       = $sentiment_data[$count]['disgust'];
+      $sentiment_model->fear          = $sentiment_data[$count]['fear'];
+      $sentiment_model->anger         = $sentiment_data[$count]['anger'];
+      $sentiment_model->surprise      = $sentiment_data[$count]['surprise'];
+      $sentiment_model->anticipation  = $sentiment_data[$count]['anticipation'];
+      $sentiment_model->result        = $sentiment_data[$count]['result'];
+      $comment_model->sentiment()->save($sentiment_model);
+
+      $count++;
+    }
+    return redirect('post/'.$page_id.'/'.$post_id);
   }
 }

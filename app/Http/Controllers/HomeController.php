@@ -127,22 +127,82 @@ class HomeController extends Controller
               ->get();
     $count = 0;
     foreach($posts as $post){
+      $post_model = App\post::where('post_id', $post->post_id)->first();
+      $post_data[$count]['page_id'] = $post_model->page_id;
       $post_data[$count]['id'] = $post->post_id;
-      $post_data[$count]['sentiment'] = DB::table('commentSentiment')
-                                        ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
-                                        ->where('comment.post_id', $post->post_id)
-                                        ->get(
-                                          array(
-                                            DB::raw('SUM(commentSentiment.joy) AS joy'),
-                                            DB::raw('SUM(commentSentiment.sadness) AS sadness'),
-                                            DB::raw('SUM(commentSentiment.trust) AS trust'),
-                                            DB::raw('SUM(commentSentiment.disgust) AS disgust'),
-                                            DB::raw('SUM(commentSentiment.fear) AS fear'),
-                                            DB::raw('SUM(commentSentiment.anger) AS anger'),
-                                            DB::raw('SUM(commentSentiment.surprise) AS surprise'),
-                                            DB::raw('SUM(commentSentiment.anticipation) AS anticipation'),
-                                            )
-                                          );
+      $num_joy = DB::table('commentSentiment')
+                  ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                  ->where('comment.post_id', $post->post_id)
+                  ->where('result', 'joy')
+                  ->count('commentSentiment.id');
+
+      $num_sadness = DB::table('commentSentiment')
+                  ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                  ->where('comment.post_id', $post->post_id)
+                  ->where('result', 'sadness')
+                  ->count('commentSentiment.id');
+
+      $num_trust = DB::table('commentSentiment')
+                  ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                  ->where('comment.post_id', $post->post_id)
+                  ->where('result', 'trust')
+                  ->count('commentSentiment.id');
+
+      $num_disgust = DB::table('commentSentiment')
+                  ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                  ->where('comment.post_id', $post->post_id)
+                  ->where('result', 'disgust')
+                  ->count('commentSentiment.id');
+
+      $num_fear = DB::table('commentSentiment')
+                  ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                  ->where('comment.post_id', $post->post_id)
+                  ->where('result', 'fear')
+                  ->count('commentSentiment.id');
+
+      $num_anger = DB::table('commentSentiment')
+                  ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                  ->where('comment.post_id', $post->post_id)
+                  ->where('result', 'anger')
+                  ->count('commentSentiment.id');
+
+      $num_surprise = DB::table('commentSentiment')
+                  ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                  ->where('comment.post_id', $post->post_id)
+                  ->where('result', 'surprise')
+                  ->count('commentSentiment.id');
+
+      $num_anticipation = DB::table('commentSentiment')
+                  ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                  ->where('comment.post_id', $post->post_id)
+                  ->where('result', 'anticipation')
+                  ->count('commentSentiment.id');
+
+      $post_data[$count]['sentiment'] = array(
+                                          'joy'           => $num_joy, 
+                                          'sadness'       => $num_sadness, 
+                                          'trust'         => $num_trust, 
+                                          'disgust'       => $num_disgust, 
+                                          'fear'          => $num_fear, 
+                                          'anger'         => $num_anger, 
+                                          'surprise'      => $num_surprise, 
+                                          'anticipation'  => $num_anticipation
+                                        );
+                                        // DB::table('commentSentiment')
+                                        // ->join('comment', 'comment.comment_id', '=', 'commentSentiment.comment_id')
+                                        // ->where('comment.post_id', $post->post_id)
+                                        // ->get(
+                                        //   array(
+                                        //     DB::raw('COUNT(id) AS joy'),
+                                        //     DB::raw('COUNT(id) AS sadness'),
+                                        //     DB::raw('COUNT(id) AS trust'),
+                                        //     DB::raw('COUNT(id) AS disgust'),
+                                        //     DB::raw('COUNT(id) AS fear'),
+                                        //     DB::raw('COUNT(id) AS anger'),
+                                        //     DB::raw('COUNT(id) AS surprise'),
+                                        //     DB::raw('COUNT(id) AS anticipation'),
+                                        //     )
+                                        //   );
       $count++;
     }
     return $post_data;

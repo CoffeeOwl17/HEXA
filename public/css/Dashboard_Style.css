@@ -22,8 +22,8 @@ body{
 }
 
 .nav-sidebar {
-  	margin-right: -21px;
-  	margin-bottom: 20px;
+  	/*margin-right: -21px;
+  	margin-bottom: 20px;*/
   	margin-left: -20px;
   	
 }
@@ -45,7 +45,6 @@ body{
 
 .main-content{
 	position: relative;
-	margin-left: 25%;
   margin-top: 10px;
 }
 
